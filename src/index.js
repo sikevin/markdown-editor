@@ -6,8 +6,10 @@ import './style/css/bootstrap.min.css';
 import './index.css';
 
 // JS Perso
-
 import {sampleText} from './sampleText'
+
+// Marked.js
+import marked from 'marked';
 
 class App extends React.Component{
 	
@@ -18,6 +20,12 @@ class App extends React.Component{
 	editText = (event) => {
 		const text = event.target.value;
 		this.setState({text});
+	};
+
+	renderText = (text) => {
+		const renderText = marked(text, {sanitized: true});
+
+		return { __html: renderText };
 	};
 
 	render() {
@@ -39,7 +47,7 @@ class App extends React.Component{
 
 					<div className="col-sm-6">
 						<h1>Résultat</h1>
-						<p>{this.state.text}</p>
+						<p dangerouslySetInnerHTML={this.renderText(this.state.text)}/>
 					</div>
 
 				</div>
